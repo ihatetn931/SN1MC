@@ -1,6 +1,6 @@
 ﻿
 using UnityEngine;
-
+//forgot why this is here i'll remove it later
 namespace SN1MC.Controls.Tools
 {
 	public class Example : MonoBehaviour

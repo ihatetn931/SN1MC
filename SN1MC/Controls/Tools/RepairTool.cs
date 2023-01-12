@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 using UnityEngine;
-
+//Aiming the repair tool with vr controller
 namespace SN1MC.Controls.Tools
 {
     class RepairTool

@@ -1,5 +1,5 @@
 ﻿
-using HarmonyLib;
+/*using HarmonyLib;
 using Oculus.Platform;
 using Platform.Utils;
 using System;
@@ -12,7 +12,7 @@ namespace SN1MC.Controls
 {
 	class OptionsMainMenu
     {
-        [HarmonyPatch(typeof(MainMenuOptions), nameof(MainMenuOptions.Update))]
+       /* [HarmonyPatch(typeof(MainMenuOptions), nameof(MainMenuOptions.Update))]
         class MainMenuOptions_Update_Patch
         {
             static bool Prefix(MainMenuOptions __instance)
@@ -21,7 +21,6 @@ namespace SN1MC.Controls
                 {
                     if (__instance.tabbedPanel.dialog.open)
                     {
-
                         __instance.tabbedPanel.dialog.Close();
                         return false;
                     }
@@ -96,7 +95,7 @@ namespace SN1MC.Controls
 				UnityEngine.Object.DontDestroyOnLoad(__instance.gameObject);
 				return false;
 			}
-		}*/
+		}
 
 
 		[HarmonyPatch(typeof(GameInput), nameof(GameInput.GetUIDirection))]
@@ -391,7 +390,7 @@ namespace SN1MC.Controls
 				GameInput.inputStates = new GameInput.InputState[GameInput.inputs.Count];
 				return false;
 			}
-		}*/
+		}
 
 	
 	[HarmonyPatch(typeof(uGUI_QuickSlots), nameof(uGUI_QuickSlots.HandleInput))]
@@ -471,4 +470,4 @@ namespace SN1MC.Controls
 			}
 		}
 	}
-}
+}*/

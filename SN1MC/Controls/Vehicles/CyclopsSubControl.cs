@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR;
 using Valve.VR;
-
+//Where the magic happens for vr controlled cyclops
 namespace SN1MC.Controls.Vehicles
 {
 	extern alias SteamVRRef;

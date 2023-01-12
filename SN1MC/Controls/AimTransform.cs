@@ -2,7 +2,7 @@
 using UnityEngine;
 using Valve.VR;
 
-
+//Sets the aim to the controller and gets rid of the old steamvr 
 namespace SN1MC.Controls.UI
 {
 	public class AimTransform

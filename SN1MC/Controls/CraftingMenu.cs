@@ -1,5 +1,5 @@
 ﻿using HarmonyLib;
-
+//This fixes the issue when selecting fab icons so the blue quare box does not show up and you can just point and click
 namespace SN1MC.Controls
 {
 	class CraftingMenu

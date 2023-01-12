@@ -1,7 +1,7 @@
 ﻿
 using HarmonyLib;
 using UnityEngine;
-
+//Aim scanner tool with the vr controller
 namespace SN1MC.Controls.Tools
 {
     class ScannerToolScan

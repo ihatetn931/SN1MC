@@ -2,7 +2,7 @@
 using HarmonyLib;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-
+//This will be where I make the sea moth controlled by vr controls like the cyclops
 namespace SN1MC.Controls.Vehicles
 {
 	class SeaMothMotion

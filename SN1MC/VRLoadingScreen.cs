@@ -3,9 +3,10 @@ using HarmonyLib;
 
 namespace SN1MC
 {
+    //Credits to moose(#8572) from Flat2VR for this ported from the below zero vr mod makes it so the load screen is not in your face and you can see the game load, will prolly remove
+    //cause there is mods that change this in Subnautica, just left it here for the time.
     class VRLoadingScreen
     {
-
         [HarmonyPatch(typeof(uGUI), nameof(uGUI.Update))]
         class uGUI_LoadingScreenReposition_Patch
         {

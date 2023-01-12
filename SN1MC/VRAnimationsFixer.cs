@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace SN1MC
 {
+    //Will be removed due to it being in VR Enhanchments enables animations while in VR
     [HarmonyPatch(typeof(GameOptions), nameof(GameOptions.GetVrAnimationMode))]
     public static class VRAnimationsFixer
     {

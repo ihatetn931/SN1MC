@@ -1,7 +1,7 @@
 ﻿
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
-
+//The custom move direction for driving the cyclops with motion controls
 namespace SN1MC.Controls
 {
 	public static class CustomUpdateMoveDirection

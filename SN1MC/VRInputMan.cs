@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace SN1MC
 {
+    //Steamvr Input
     extern alias SteamVRRef;
     extern alias SteamVRActions;
     public class VRInputManager

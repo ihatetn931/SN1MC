@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-
+//Might use this instead of my custom laser pointer
 namespace SN1MC.Controls
 {
     extern alias SteamVRRef;

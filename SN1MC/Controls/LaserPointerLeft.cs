@@ -5,7 +5,7 @@ using UnityEngine.Animations;
 using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 using UnityEngine.UI;
-
+//This is the laserpointer that pops up when you're using the Exosuit so you can aim both arms
 namespace SN1MC.Controls
 {
     public class LaserPointerLeft : MonoBehaviour

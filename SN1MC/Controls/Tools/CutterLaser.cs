@@ -1,7 +1,7 @@
 ﻿
 using HarmonyLib;
 using UnityEngine;
-
+//Makes it so laser cutter is aimed with the vr controller
 namespace SN1MC.Controls.Tools
 {
     class CutterLaser

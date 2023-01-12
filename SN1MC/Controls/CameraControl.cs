@@ -2,7 +2,7 @@
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.XR;
-
+//This is the camera control, I have this here so if needed I can unlock the view from the player body so it does not rotate with the vr headset mostly for debugging
 namespace SN1MC.Controls
 {
     class CameraControl

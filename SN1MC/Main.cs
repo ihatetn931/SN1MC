@@ -29,7 +29,6 @@ namespace SN1MC
         private const string pluginVersion = "1.0.0";
         void Awake()
         {
-            //SteamVRActions.Valve.VR.SteamVR_Actions.PreInitialize();
             //I guess if they don't want to play in vr they don't have to.
             if (!UnityEngine.XR.XRSettings.enabled)
             {
@@ -40,13 +39,13 @@ namespace SN1MC
             Debug.Log(pluginName + " " + pluginVersion + " " + "Loaded");
             Harmony harmony = new Harmony(pluginGUID);
             harmony.PatchAll();
-            new AssetLoader();
+            //new AssetLoader();
         }
     }
     public class SN1MC : MonoBehaviour
     {
-        public static Event capsLockCheck;
         public static bool UsingSteamVR = false;
+
         public SN1MC()
         {
             DontDestroyOnLoad(gameObject);
@@ -56,11 +55,13 @@ namespace SN1MC
         {
             SceneManager.sceneLoaded += new UnityAction<Scene, LoadSceneMode>(OnSceneLoaded);
         }
+
         void Start()
         {
             if (XRSettings.loadedDeviceName == "OpenVR")
                 InitSteamVR();
         }
+
         private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             CoroutineHost.StartCoroutine(RemoveNRecenter());

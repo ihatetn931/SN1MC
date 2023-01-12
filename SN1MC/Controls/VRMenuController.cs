@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using UnityEngine;
 using UnityEngine.XR;
-
+//Controls the Gaze Cursor in the MainMenu so you can use your right controller to select buttons ect.
 namespace SN1MC.Controls
 {
     extern alias SteamVRActions;

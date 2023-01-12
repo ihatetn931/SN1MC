@@ -173,11 +173,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AimIKTargetVerticalRotationLimit.cs" />
     <Compile Include="AssetLoader.cs" />
-    <Compile Include="AudioFixes.cs" />
-    <Compile Include="BubblesSubtitleFixer.cs" />
-    <Compile Include="CameraPositionFixes.cs" />
     <Compile Include="Controls\AxisToButton.cs" />
     <Compile Include="Controls\Binding.cs" />
     <Compile Include="Controls\CameraControl.cs" />
@@ -213,20 +209,13 @@
     <Compile Include="Controls\VRHandsController.cs" />
     <Compile Include="Controls\VRMenuController.cs" />
     <Compile Include="Controls\XRInputManager.cs" />
-    <Compile Include="GazeLayerFix.cs" />
-    <Compile Include="InGameMenu.cs" />
-    <Compile Include="MenuSliderPatches.cs" />
-    <Compile Include="PDAPositioning.cs" />
     <Compile Include="VRAnimationsFixer.cs" />
-    <Compile Include="CraftingMenuFixer.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="HUDFixer.cs" />
     <Compile Include="RecenterVRButtonAdder.cs" />
     <Compile Include="VRInputMan.cs" />
     <Compile Include="VRLoadingScreen.cs" />
     <Compile Include="VRCustomOptionsMenu.cs" />
-    <Compile Include="WBOITFixes.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

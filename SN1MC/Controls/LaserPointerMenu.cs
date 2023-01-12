@@ -5,7 +5,7 @@ using UnityEngine.Animations;
 using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 using UnityEngine.UI;
-
+//The laser pointer for the main menu but does not work, well it does but placment is wrong
 namespace SN1MC.Controls
 {
     public class LaserPointerMenu : MonoBehaviour

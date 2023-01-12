@@ -5,7 +5,7 @@ using UnityEngine.Animations;
 using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 using UnityEngine.UI;
-
+//The main laser pointer for interacting with everything
 namespace SN1MC.Controls
 {
     public class LaserPointer : MonoBehaviour

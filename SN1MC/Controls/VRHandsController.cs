@@ -6,7 +6,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.XR;
 
-
+//This is what makes the hands move and adds the laser pointers to them
 namespace SN1MC.Controls
 {
     public class VRHandsController : MonoBehaviour

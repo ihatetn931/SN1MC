@@ -2,7 +2,7 @@
 using FMOD.Studio;
 using HarmonyLib;
 using UnityEngine;
-
+//Fire extingusher aim
 namespace SN1MC.Controls.Tools
 {
     class ExtinguisherFire

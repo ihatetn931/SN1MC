@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.XR;
 //using VREnhancementsBZ;
-
+//For the laser pointer raycast so you can point with it.
 namespace SN1MC.Controls
 {
 	extern alias SteamVRActions;
@@ -19,7 +19,6 @@ namespace SN1MC.Controls
 			//throw new System.NotImplementedException();
 		}
 
-
 		public static FpsInput main
 		{
 			get
@@ -31,6 +30,7 @@ namespace SN1MC.Controls
 				return _main;
 			}
 		}
+
 		public static PointerEventData.FramePressState StateForMouseButton(int buttonId)
 		{
 			bool mouseButtonDown = Input.GetMouseButtonDown(buttonId);

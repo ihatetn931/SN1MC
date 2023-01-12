@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+//Targeting for tools that require you to aim like propulsion cannon
 namespace SN1MC.Controls
 {
     class CustomTargeting

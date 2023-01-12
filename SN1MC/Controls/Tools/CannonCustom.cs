@@ -2,6 +2,7 @@
 
 namespace SN1MC.Controls.Tools
 {
+	//this is mostly for the aiming on the exosuit cannon for the left arm
     class CannonCustom
     {
 		public static GameObject _grabbedObjectLeft;

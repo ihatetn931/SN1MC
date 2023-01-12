@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+//My failed attempt and turning axis values in to buttons till I found the game already has something for this
 namespace SN1MC.Controls
 {
     class AxisToButton

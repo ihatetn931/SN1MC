@@ -10,6 +10,7 @@ using UnityEngine.XR;
 
 namespace SN1MC
 {
+	//VR Options Menu for all the mods settings so It does not require SML Helper and make it so i can do it my own way.
 	public static class VRCustomOptionsMenu
 	{
 		public static uGUI_OptionsPanel optionsPanel;

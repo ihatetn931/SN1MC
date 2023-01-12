@@ -4,7 +4,7 @@ using HarmonyLib;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.XR;
-
+//All the magic to control the exo suit arms by the vr controllers
 namespace SN1MC.Controls.Vehicles
 {
 	public static class ExosuitPatches

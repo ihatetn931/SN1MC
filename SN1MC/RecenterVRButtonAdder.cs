@@ -2,7 +2,7 @@
 using HarmonyLib;
 using System.Linq;
 using TMPro;
-
+//Will be removed but here to make my life easier
 // The method in this class was copied from IWhoI's VREnhancements mod for the original Subnautica
 // https://github.com/IWhoI/SubnauticaVREnhancements/blob/master/VREnhancements/MainPatcher.cs
 

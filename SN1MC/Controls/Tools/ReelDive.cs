@@ -1,7 +1,7 @@
 ﻿
 using HarmonyLib;
 using UnityEngine;
-
+//For aiming the dive reel
 namespace SN1MC.Controls.Tools
 {
     class ReelDive
@@ -89,7 +89,7 @@ namespace SN1MC.Controls.Tools
 			[HarmonyPrefix]
 			static bool Prefix(GameObject sender, string slot, DiveReel __instance)
 			{
-				if (__instance.usingPlayer != null && __instance.nodes.Count > 0 && !__instance.cooldown && GameInput.GetButtonHeld(GameInput.Button.AltTool) && GameInput.GetButtonHeld(GameInput.Button.MoveDown) && GameInput.GetButtonHeld(GameInput.Button.MoveUp))
+				if (__instance.usingPlayer != null && __instance.nodes.Count > 0 && !__instance.cooldown && GameInput.GetButtonHeld(GameInput.Button.AltTool))
 				{
 					__instance.resetNodesSFX.Play();
 					__instance.ResetNodes();

@@ -1,12 +1,6 @@
 ﻿
 using HarmonyLib;
-using Platform.Utils;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
-using UnityEngine.EventSystems;
-
+//This is for capturing the buttons for steam vr
 namespace SN1MC.Controls
 {
 	extern alias SteamVRRef;
@@ -494,7 +488,6 @@ namespace SN1MC.Controls
 				}
 				return inputStateFlags;
 			}*/
-
 
 		/*private static void AddKeyInput(string name, SteamVRButtonCode keyCode, GameInput.Device device)
 		{

@@ -4,7 +4,7 @@ using HarmonyLib;
 using System;
 using UnityEngine;
 
-
+//For making the builed tool aim from the vr controller
 namespace SN1MC.Controls.Tools
 {
 	extern alias SteamVRRef;

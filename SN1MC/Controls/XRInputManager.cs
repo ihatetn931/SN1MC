@@ -6,7 +6,7 @@ using System;
 using Platform.Utils;
 using FMODUnity;
 using UnityEngine.Events;
-
+//for xr controller data will prolly be removed eventually and setup to use the Oculus plugin or steamvr
 namespace SN1MC
 {
     extern alias SteamVRRef;

@@ -1,7 +1,7 @@
-﻿using System.IO;
+﻿/*using System.IO;
 using BepInEx;
 using UnityEngine;
-
+//This will be for making the fingers move when I get around to it.
 namespace SN1MC
 {
     class AssetLoader
@@ -47,4 +47,4 @@ namespace SN1MC
         }
 
     }
-}
+}*/
