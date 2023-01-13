@@ -45,9 +45,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>F:\Steam Games SSD\steamapps\common\Subnautica\Subnautica_Data\Managed\publicized_assemblies\Assembly-CSharp_publicized.dll</HintPath>
     </Reference>
-    <Reference Include="AssetsTools.NET">
-      <HintPath>$(CommonDir)Subnautica\BepInEx\patchers\GlobalGameManagerVRPatcher\AssetsTools.NET.dll</HintPath>
-    </Reference>
     <Reference Include="BepInEx">
       <HintPath>$(CommonDir)Subnautica\BepInEx\core\BepInEx.dll</HintPath>
       <Private>False</Private>
@@ -87,15 +84,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="Unity.TextMeshPro">
       <HintPath>$(CommonDir)Subnautica\Subnautica_Data\Managed\Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.XR.Management, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>F:\Steam Games SSD\steamapps\common\Subnautica\Subnautica_Data\Managed\Unity.XR.Management.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.XR.OpenVR, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>F:\Steam Games SSD\steamapps\common\Subnautica\Subnautica_Data\Managed\Unity.XR.OpenVR.dll</HintPath>
-      <Aliases>OpenVRUnity</Aliases>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>$(CommonDir)Subnautica\Subnautica_Data\Managed\UnityEngine.dll</HintPath>

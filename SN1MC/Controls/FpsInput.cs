@@ -221,8 +221,10 @@ namespace SN1MC.Controls
 							}
 							else if (triggerObject.distance > 1 && triggerObject.distance < FPSInputModule.current.maxInteractionDistance)
 							{
+
 								SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRUI.Deactivate();
 								SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRMain.Activate();
+
 								if (Player.main.GetPDA().isInUse && !IngameMenu.main.isActiveAndEnabled)
 									VRHandsController.laserPointer.LaserPointerSet(VRHandsController.rightController.transform.position - VRHandsController.rightController.transform.up * FPSInputModule.current.maxInteractionDistance);
 								else

@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using UnityEngine;
 //This fixes the issue when selecting fab icons so the blue quare box does not show up and you can just point and click
 namespace SN1MC.Controls
 {
@@ -73,6 +74,20 @@ namespace SN1MC.Controls
 				__result = false;
 
 
+				return true;
+			}
+
+		}
+
+		[HarmonyPatch(typeof(uGUI_InputGroup), nameof(uGUI_InputGroup.Update))]
+		public static class uGUI_InputGroup_Update_Patch
+		{
+			public static bool Prefix( uGUI_InputGroup __instance)
+			{
+				if (__instance.focused && Input.GetKeyDown(KeyCode.Escape) || GameInput.GetButtonDown(GameInput.Button.UICancel))
+				{
+					__instance.Deselect();
+				}
 				return true;
 			}
 

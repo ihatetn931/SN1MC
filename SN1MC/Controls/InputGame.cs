@@ -1,5 +1,6 @@
 ﻿
 using HarmonyLib;
+using UnityEngine;
 //This is for capturing the buttons for steam vr
 namespace SN1MC.Controls
 {
@@ -17,8 +18,8 @@ namespace SN1MC.Controls
 					__result = vrInput.GetButtonDown(button, SteamVRRef.Valve.VR.SteamVR_Input_Sources.Any);
 				else
 					__result = (GameInput.GetInputStateForButton(button).flags & GameInput.InputStateFlags.Down) > (GameInput.InputStateFlags)0U;
-				if (__result)
-					ErrorMessage.AddDebug("ResultGetButtonDown: " + button);
+				//if (__result)
+					//ErrorMessage.AddDebug("ResultGetButtonDown: " + button);
 				return false;
 			}
 		}
@@ -34,8 +35,8 @@ namespace SN1MC.Controls
 					__result = vrInput.GetButton(button, SteamVRRef.Valve.VR.SteamVR_Input_Sources.Any);
 				else
 					__result = (GameInput.GetInputStateForButton(button).flags & GameInput.InputStateFlags.Up) > (GameInput.InputStateFlags)0U;
-				if (__result)
-					ErrorMessage.AddDebug("ResultGetButtonHeld: " + button);
+				//if (__result)
+					//ErrorMessage.AddDebug("ResultGetButtonHeld: " + button);
 				return false;
 			}
 		}
@@ -51,11 +52,88 @@ namespace SN1MC.Controls
 					__result = vrInput.GetButtonUp(button, SteamVRRef.Valve.VR.SteamVR_Input_Sources.Any);
 				else
 					__result = (GameInput.GetInputStateForButton(button).flags & GameInput.InputStateFlags.Up) > (GameInput.InputStateFlags)0U;
-				if(__result)
-					ErrorMessage.AddDebug("ResultGetButtonUp: " + button);
+				//if(__result)
+					//ErrorMessage.AddDebug("ResultGetButtonUp: " + button);
 				return false;
 			}
 		}
+
+		[HarmonyPatch(typeof(GameInput), nameof(GameInput.UpdateMoveDirection))]
+		public static class GameInput_UpdateMoveDirection__Patch
+		{
+			[HarmonyPrefix]
+			static bool Prefix()
+			{
+				VRInputManager vrInput = new VRInputManager();
+				float num = 0f;
+				num += GameInput.GetAnalogValueForButton(GameInput.Button.MoveForward);
+				num -= GameInput.GetAnalogValueForButton(GameInput.Button.MoveBackward);
+				float num2 = 0f;
+				num2 -= GameInput.GetAnalogValueForButton(GameInput.Button.MoveLeft);
+				num2 += GameInput.GetAnalogValueForButton(GameInput.Button.MoveRight);
+				float num3 = 0f;
+				bool floatToBoolUp = false;
+				bool floatToBoolDown = false;
+				floatToBoolUp = vrInput.GetButton(GameInput.Button.MoveUp, SteamVRRef.Valve.VR.SteamVR_Input_Sources.Any);
+				floatToBoolDown = vrInput.GetButton(GameInput.Button.MoveDown, SteamVRRef.Valve.VR.SteamVR_Input_Sources.Any);
+				if (floatToBoolDown)
+					num3 = -1;
+				else if (floatToBoolUp)
+					num3 = 1;
+				else
+					num3 = 0;
+				//num3 += GameInput.GetAnalogValueForButton(GameInput.Button.MoveUp);
+				//num3 -= GameInput.GetAnalogValueForButton(GameInput.Button.MoveDown);
+				if (GameInput.autoMove && num * num + num2 * num2 > 0.010000001f)
+				{
+					GameInput.autoMove = false;
+				}
+				if (GameInput.autoMove)
+				{
+					GameInput.moveDirection.Set(0f, num3, 1f);
+				}
+				else
+				{
+					GameInput.moveDirection.Set(num2, num3, num);
+				}
+				if (GameInput.IsPrimaryDeviceGamepad())
+				{
+					if (GameInput.autoMove)
+					{
+						GameInput.isRunningMoveThreshold = false;
+						return false;
+					}
+					GameInput.isRunningMoveThreshold = (GameInput.moveDirection.sqrMagnitude > 0.80999994f);
+					if (!GameInput.isRunningMoveThreshold)
+					{
+						GameInput.moveDirection /= 0.9f;
+					}
+				}
+				return false;
+			}
+		}
+
+		/*		[HarmonyPatch(typeof(GameInputExtensions), nameof(GameInputExtensions.GetButtonDown))]
+				public static class GameInputExtensions_GetButtonDown__Patch
+				{
+					[HarmonyPrefix]
+					static bool Prefix(GameInput.Button[] buttons, ref bool __result)
+					{
+						int i = 0;
+						int num = buttons.Length;
+						while (i < num)
+						{
+							Debug.Log("Buttons: " + buttons[i]);
+							if (GameInput.GetButtonDown(buttons[i]))
+							{
+								__result =  true;
+							}
+							i++;
+						}
+						__result =  false;
+						return false;
+					}
+				}*/
 
 		/*		[HarmonyPatch(typeof(GameInput), nameof(GameInput.GetInputState))]
 				public static class GameInput_InputStateFlags__Patch

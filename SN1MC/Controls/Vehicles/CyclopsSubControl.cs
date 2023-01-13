@@ -224,13 +224,14 @@ namespace SN1MC.Controls.Vehicles
 						rightT = __instance.rightHandPlug;
 					if (__instance.rightHandPlug)
 					{
-						float rightHandDistance = Vector3.Distance(__instance.rightHandPlug.position, VRHandsController.rightController.transform.position); if (GameInput.GetButtonHeld(GameInput.Button.MoveDown))
+						float rightHandDistance = Vector3.Distance(__instance.rightHandPlug.position, VRHandsController.rightController.transform.position); 
+						if (GameInput.GetButtonHeld(GameInput.Button.MoveDown))
 						{
 							rightHandAttached = true;
 
 							if (VRHandsController.rightController.transform.parent != __instance.rightHandPlug)
 							{
-								ErrorMessage.AddDebug("Parented Right");
+								//ErrorMessage.AddDebug("Parented Right");
 								SetParent(VRHandsController.rightController.transform, __instance.rightHandPlug,true);
 							}
 							VRHandsController.rightController.transform.localPosition = __instance.rightHandPlug.localPosition;
@@ -256,7 +257,7 @@ namespace SN1MC.Controls.Vehicles
 							leftHandAttached = true;
 							if (VRHandsController.leftController.transform.parent != __instance.leftHandPlug)
 							{
-								ErrorMessage.AddDebug("Parented Left");
+								//ErrorMessage.AddDebug("Parented Left");
 								SetParent(VRHandsController.leftController.transform, __instance.leftHandPlug, true);
 							}
 							VRHandsController.leftController.transform.localPosition = __instance.leftHandPlug.localPosition;

@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+﻿/*using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
 //Will be for making the seaglide take you where you aim it so it does not use head movement
@@ -72,6 +72,6 @@ namespace SN1MC.Controls.Vehicles
 				__instance.seaglideIllumRenderer.SetPropertyBlock(__instance.seaglideIllumPropertyBlock, 1);
 				return false;
 			}
-		}*/
+		}*
 	}
-}
+}*/

@@ -62,8 +62,16 @@ namespace SN1MC.Controls
 
         public void UpdateMenuPositions()
         {
-            SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRUI.Activate();
-            SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRMain.Deactivate();
+            if (uGUI.main)
+            {
+                SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRUI.Activate();
+                SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRMain.Deactivate();
+            }
+            else
+            {
+                SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRUI.Deactivate();
+                SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRMain.Activate();
+            }
             if (SN1MC.UsingSteamVR)
             {
                 rightController.transform.localPosition = Vector3.Lerp(rightController.transform.localPosition, VRInputManager.RightControllerPosition, VRCustomOptionsMenu.ikSmoothing);
