@@ -89,13 +89,30 @@ namespace SN1MC.Controls.Tools
 			[HarmonyPrefix]
 			static bool Prefix(GameObject sender, string slot, DiveReel __instance)
 			{
-				if (__instance.usingPlayer != null && __instance.nodes.Count > 0 && !__instance.cooldown && GameInput.GetButtonHeld(GameInput.Button.AltTool))
+				if (SN1MC.UsingSteamVR)
 				{
-					__instance.resetNodesSFX.Play();
-					__instance.ResetNodes();
-					Player.main.playerAnimator.SetTrigger("divereel_reset");
-					__instance.animationController.SetTrigger("divereel_reset");
-					__instance.SetDiveReelOutOfAmmoAnimator(false);
+					if (__instance.usingPlayer != null && __instance.nodes.Count > 0 && !__instance.cooldown && GameInput.GetButtonHeld(GameInput.Button.AltTool))
+					{
+						__instance.resetNodesSFX.Play();
+						__instance.ResetNodes();
+						Player.main.playerAnimator.SetTrigger("divereel_reset");
+						__instance.animationController.SetTrigger("divereel_reset");
+						__instance.SetDiveReelOutOfAmmoAnimator(false);
+					}
+				}
+				else
+				{
+					if (GameInput.GetButtonHeld(GameInput.Button.MoveDown) && GameInput.GetButtonHeld(GameInput.Button.MoveDown))
+					{
+						if (__instance.usingPlayer != null && __instance.nodes.Count > 0 && !__instance.cooldown && GameInput.GetButtonHeld(GameInput.Button.AltTool))
+						{
+							__instance.resetNodesSFX.Play();
+							__instance.ResetNodes();
+							Player.main.playerAnimator.SetTrigger("divereel_reset");
+							__instance.animationController.SetTrigger("divereel_reset");
+							__instance.SetDiveReelOutOfAmmoAnimator(false);
+						}
+					}
 				}
 				return false;
 			}

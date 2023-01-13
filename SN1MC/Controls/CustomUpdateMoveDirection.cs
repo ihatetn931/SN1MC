@@ -15,8 +15,11 @@ namespace SN1MC.Controls
 				num += GameInput.GetAnalogValueForButton(GameInput.Button.MoveForward);
 				num -= GameInput.GetAnalogValueForButton(GameInput.Button.MoveBackward);
 				//float num2 = 0f;
-
-				float PitchSpeed = 0.8f;
+				float PitchSpeed = 0;
+				if (SN1MC.UsingSteamVR)
+					PitchSpeed = 1.0f;
+				else
+					PitchSpeed = 0.8f;
 				float RotationSpeed = 3.0f;
 
 				Vector3 YawRight = Vector3.zero;

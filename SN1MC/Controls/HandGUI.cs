@@ -80,6 +80,8 @@ namespace SN1MC.Controls
 						bool buttonDown3 = false;
 						bool buttonHeld3 = false;
 						bool buttonUp3 = false;
+						bool moveUpHeld = false;
+						bool moveDownHeld = false;
 
 						flag = GameInput.GetButtonDown(GameInput.Button.LeftHand);
 						buttonHeld = GameInput.GetButtonHeld(GameInput.Button.LeftHand);
@@ -92,8 +94,12 @@ namespace SN1MC.Controls
 						buttonDown3 = GameInput.GetButtonDown(GameInput.Button.AltTool);
 						buttonHeld3 = GameInput.GetButtonHeld(GameInput.Button.AltTool);
 						buttonUp3 = GameInput.GetButtonUp(GameInput.Button.AltTool);
-
-						PDAScanner.UpdateTarget(8f, buttonDown3 || buttonHeld3);
+						moveUpHeld = GameInput.GetButtonHeld(GameInput.Button.MoveUp);
+						moveDownHeld = GameInput.GetButtonHeld(GameInput.Button.MoveDown);
+						if(SN1MC.UsingSteamVR)
+							PDAScanner.UpdateTarget(8f, buttonDown3 || buttonHeld3);
+						else
+							PDAScanner.UpdateTarget(8f, buttonDown3 || buttonHeld3 && moveDownHeld && moveUpHeld);
 						PDAScanner.ScanTarget scanTarget = PDAScanner.scanTarget;
 						if (scanTarget.isValid && Inventory.main.container.Contains(TechType.Scanner) && PDAScanner.CanScan() == PDAScanner.Result.Scan && !PDAScanner.scanTarget.isPlayer)
 						{
@@ -138,26 +144,50 @@ namespace SN1MC.Controls
 							else if (!buttonUp || tool.OnLeftHandUp())
 							{
 							}
-
-							if (buttonDown3)
+							if (SN1MC.UsingSteamVR)
 							{
-								if (tool.OnAltDown())
+								if (buttonDown3)
 								{
-									__instance.usedAltAttackThisFrame = true;
-									tool.OnToolActionStart();
+									if (tool.OnAltDown())
+									{
+										__instance.usedAltAttackThisFrame = true;
+										tool.OnToolActionStart();
+									}
+								}
+
+								else if (buttonHeld3)
+								{
+									if (tool.OnAltHeld())
+									{
+									}
+								}
+
+								else if (!buttonUp3 || tool.OnAltUp())
+								{
 								}
 							}
-
-							else if (buttonHeld3)
+							else
 							{
-								if (tool.OnAltHeld())
+								if (buttonDown3 && moveDownHeld && moveUpHeld)
 								{
+									if (tool.OnAltDown())
+									{
+										__instance.usedAltAttackThisFrame = true;
+										tool.OnToolActionStart();
+									}
+								}
+
+								else if (buttonHeld3 && moveDownHeld && moveUpHeld)
+								{
+									if (tool.OnAltHeld())
+									{
+									}
 								}
 							}
-
-							else if (!buttonUp3 || tool.OnAltUp())
+							if (!buttonUp3 || tool.OnAltUp())
 							{
 							}
+
 							if (!buttonDown || tool.OnReloadDown())
 							{
 							}

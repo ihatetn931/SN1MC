@@ -44,7 +44,7 @@ namespace SN1MC.Controls.Vehicles
 					{
 						if (rightT||leftT)
 						{
-							__instance.throttle =CustomUpdateMoveDirection.GetMoveDirection();
+							__instance.throttle = CustomUpdateMoveDirection.GetMoveDirection();
 							if (leftT)
 								 CustomUpdateMoveDirection.UpdateMoveDirection(rightT, leftT, "Left");
 							if(rightT)
@@ -86,7 +86,6 @@ namespace SN1MC.Controls.Vehicles
 							global::Utils.PlayFMODAsset(__instance.engineStartSound, MainCamera.camera.transform, 20f);
 						}
 					}
-					VRInputManager vrInput = new VRInputManager();
 					if (AvatarInputHandler.main.IsEnabled())
 					{
 						if (GameInput.GetButtonDown(GameInput.Button.RightHand))
@@ -228,11 +227,10 @@ namespace SN1MC.Controls.Vehicles
 						if (GameInput.GetButtonHeld(GameInput.Button.MoveDown))
 						{
 							rightHandAttached = true;
-
 							if (VRHandsController.rightController.transform.parent != __instance.rightHandPlug)
 							{
 								//ErrorMessage.AddDebug("Parented Right");
-								SetParent(VRHandsController.rightController.transform, __instance.rightHandPlug,true);
+								SetParent(VRHandsController.rightController.transform, __instance.rightHandPlug, true);
 							}
 							VRHandsController.rightController.transform.localPosition = __instance.rightHandPlug.localPosition;
 							SetWorldIKTargetRight(__instance.rightHandPlug);
@@ -242,7 +240,7 @@ namespace SN1MC.Controls.Vehicles
 							rightHandAttached = false;
 							if (VRHandsController.rightController.transform.parent != Player.main.camRoot.transform)
 							{
-								SetParent(VRHandsController.rightController.transform, Player.main.camRoot.transform,false);
+								SetParent(VRHandsController.rightController.transform, Player.main.camRoot.transform, false);
 							}
 							SetWorldIKTargetRight(rightT);
 						}
@@ -285,15 +283,29 @@ namespace SN1MC.Controls.Vehicles
 			{
 				if (__instance.enabled && eventData.cinematicController == __instance.cinematicController && eventData.player.GetCurrentSub() == __instance.subRoot)
 				{
-					__instance.currentPlayer = eventData.player;
-					__instance.currentPlayer.EnterPilotingMode(__instance, false);
-					__instance.Subscribe(__instance.currentPlayer, true);
-					if (__instance.leftHandPlug && __instance.rightHandPlug)
+					if (VRCustomOptionsMenu.CyclopsPilot)
 					{
-						isPilot = true;
-						//Player.main.armsController.SetWorldIKTarget(__instance.leftHandPlug, __instance.rightHandPlug);
+						__instance.currentPlayer = eventData.player;
+						__instance.currentPlayer.EnterPilotingMode(__instance, false);
+						__instance.Subscribe(__instance.currentPlayer, true);
+						if (__instance.leftHandPlug && __instance.rightHandPlug)
+						{
+							isPilot = true;
+							//Player.main.armsController.SetWorldIKTarget(__instance.leftHandPlug, __instance.rightHandPlug);
+						}
+						UWE.Utils.GetEntityRoot(__instance.gameObject).BroadcastMessage("StartPiloting");
 					}
-					UWE.Utils.GetEntityRoot(__instance.gameObject).BroadcastMessage("StartPiloting");
+					else
+                    {
+						__instance.currentPlayer = eventData.player;
+						__instance.currentPlayer.EnterPilotingMode(__instance, false);
+						__instance.Subscribe(__instance.currentPlayer, true);
+						if (__instance.leftHandPlug && __instance.rightHandPlug)
+						{
+							Player.main.armsController.SetWorldIKTarget(__instance.leftHandPlug, __instance.rightHandPlug);
+						}
+						UWE.Utils.GetEntityRoot(__instance.gameObject).BroadcastMessage("StartPiloting");
+					}
 				}
 				return false;
 			}

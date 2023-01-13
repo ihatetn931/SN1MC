@@ -10,7 +10,8 @@ namespace SN1MC
     {
         static VRInputManager()
         {
-            SetUpListeners();
+            if(SN1MC.UsingSteamVR)
+                SetUpListeners();
         }
 
         public static Vector2 LeftAxis = Vector2.zero;

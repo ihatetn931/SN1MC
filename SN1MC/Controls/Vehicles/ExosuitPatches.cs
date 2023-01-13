@@ -625,13 +625,30 @@ namespace SN1MC.Controls.Vehicles
 								}
 								bool hasPropCannon = __instance.rightArm is ExosuitPropulsionArm || __instance.leftArm is ExosuitPropulsionArm;
 								__instance.UpdateUIText(hasPropCannon);
-								if (GameInput.GetButtonDown(GameInput.Button.AltTool) && !__instance.rightArm.OnAltDown())
+								if (SN1MC.UsingSteamVR)
 								{
-									__instance.leftArm.OnAltDown();
+									if (GameInput.GetButtonDown(GameInput.Button.AltTool) && !__instance.rightArm.OnAltDown())
+									{
+										__instance.leftArm.OnAltDown();
+									}
+									if (GameInput.GetButtonDown(GameInput.Button.AltTool) && !__instance.leftArm.OnAltDown())
+									{
+										__instance.rightArm.OnAltDown();
+									}
 								}
-								if (GameInput.GetButtonDown(GameInput.Button.AltTool) && !__instance.leftArm.OnAltDown())
-								{
-									__instance.rightArm.OnAltDown();
+								else
+                                {
+									if (GameInput.GetButtonHeld(GameInput.Button.MoveUp) && GameInput.GetButtonHeld(GameInput.Button.MoveDown))
+									{
+										if (GameInput.GetButtonDown(GameInput.Button.AltTool) && !__instance.rightArm.OnAltDown())
+										{
+											__instance.leftArm.OnAltDown();
+										}
+										if (GameInput.GetButtonDown(GameInput.Button.AltTool) && !__instance.leftArm.OnAltDown())
+										{
+											__instance.rightArm.OnAltDown();
+										}
+									}
 								}
 							}
 							__instance.UpdateActiveTarget();

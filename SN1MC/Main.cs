@@ -31,7 +31,6 @@ namespace SN1MC
             {
                 return;
             }
-
             new GameObject("_SN1MC").AddComponent<SN1MC>();
             Debug.Log(pluginName + " " + pluginVersion + " " + "Patching...");
             Harmony harmony = new Harmony(pluginGUID);
@@ -46,6 +45,7 @@ namespace SN1MC
     public class SN1MC : MonoBehaviour
     {
         public static bool UsingSteamVR = false;
+        public static bool UsingOculus = false;
 
         public SN1MC()
         {
@@ -59,8 +59,14 @@ namespace SN1MC
 
         void Start()
         {
-            if (XRSettings.loadedDeviceName == "OpenVR")
-                InitSteamVR();
+            if (XRSettings.loadedDeviceName != "Oculus")
+                if (XRSettings.loadedDeviceName == "OpenVR")
+                    InitSteamVR();
+            if (XRSettings.loadedDeviceName != "OpenVR")
+                if (XRSettings.loadedDeviceName == "Oculus")
+                {
+                    UsingOculus = true;
+                }
         }
 
         private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -77,17 +83,36 @@ namespace SN1MC
 
         internal void Update()
         {
-            if (FPSInputModule.current != null && UsingSteamVR)
+            if (UsingSteamVR)
             {
-                if (SteamVRRef.Valve.VR.SteamVR_Input.GetState("Sprint", SteamVRRef.Valve.VR.SteamVR_Input_Sources.Any))
+                if (FPSInputModule.current != null)
                 {
-                    FPSInputModule.current.lockMovement = true;
-                    FPSInputModule.current.lockRotation = true;
+                    if (SteamVRRef.Valve.VR.SteamVR_Input.GetState("Sprint", SteamVRRef.Valve.VR.SteamVR_Input_Sources.Any))
+                    {
+                        FPSInputModule.current.lockMovement = true;
+                        FPSInputModule.current.lockRotation = true;
+                    }
+                    else
+                    {
+                        FPSInputModule.current.lockMovement = false;
+                        FPSInputModule.current.lockRotation = false;
+                    }
                 }
-                else
+            }
+            else
+            {
+                if (FPSInputModule.current != null)
                 {
-                    FPSInputModule.current.lockMovement = false;
-                    FPSInputModule.current.lockRotation = false;
+                    if (GameInput.GetButtonHeld(GameInput.Button.MoveUp) && GameInput.GetButtonHeld(GameInput.Button.MoveDown))
+                    {
+                        FPSInputModule.current.lockMovement = true;
+                        FPSInputModule.current.lockRotation = true;
+                    }
+                    else
+                    {
+                        FPSInputModule.current.lockMovement = false;
+                        FPSInputModule.current.lockRotation = false;
+                    }
                 }
             }
 
@@ -103,6 +128,8 @@ namespace SN1MC
             {
                 VRUtil.Recenter();
                 UsingSteamVR = false;
+                UsingOculus = true;
+                Controls.Binding.SetControlsforOculus();
                 return;
             }
 
@@ -111,14 +138,17 @@ namespace SN1MC
                 SteamVRRef.Valve.VR.SteamVR.settings.trackingSpace = SteamVRRef.Valve.VR.ETrackingUniverseOrigin.TrackingUniverseSeated;
                 OpenVR.Compositor.SetTrackingSpace(ETrackingUniverseOrigin.TrackingUniverseSeated);
                 OpenVR.System.ResetSeatedZeroPose();
+                GameInput.SetupDefaultControllerBindings();
                 return;
             }
         }
 
         public static void InitSteamVR()
         {
+            UsingOculus = false;
+            Debug.Log("InitSteamVR");
             UsingSteamVR = true;
-
+            Debug.Log("UsingSteamVr: " + UsingSteamVR);
             Debug.Log("Initializing SteamVR_Actions...");
             SteamVRActions.Valve.VR.SteamVR_Actions.PreInitialize();
             Debug.Log("SteamVR Actions Initialize");

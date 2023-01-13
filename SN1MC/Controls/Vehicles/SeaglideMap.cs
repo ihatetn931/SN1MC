@@ -1,4 +1,4 @@
-﻿/*using HarmonyLib;
+﻿using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
 //Will be for making the seaglide take you where you aim it so it does not use head movement
@@ -6,7 +6,7 @@ namespace SN1MC.Controls.Vehicles
 {
 	class SeaglideMap
 	{
-		[HarmonyPatch(typeof(Seaglide), nameof(Seaglide.UpdateActiveState))]
+		/*[HarmonyPatch(typeof(Seaglide), nameof(Seaglide.UpdateActiveState))]
 		class Seaglide_UpdateActiveState_Update_Patch
 		{
 			static bool Prefix(Seaglide __instance)
@@ -36,8 +36,8 @@ namespace SN1MC.Controls.Vehicles
 				}
 				return false;
 			}
-		}
-		/*[HarmonyPatch(typeof(VehicleInterface_MapController), nameof(VehicleInterface_MapController.Update))]
+		}*/
+		[HarmonyPatch(typeof(VehicleInterface_MapController), nameof(VehicleInterface_MapController.Update))]
 		class VehicleInterface_MapController_Update_Patch
 		{
 			static bool Prefix(VehicleInterface_MapController __instance)
@@ -50,9 +50,22 @@ namespace SN1MC.Controls.Vehicles
 				{
 					__instance.miniWorld.active = false;
 				}
-				else if (AvatarInputHandler.main.IsEnabled() && GameInput.GetButtonDown(GameInput.Button.AltTool))
+				else if (SN1MC.UsingSteamVR)
 				{
-					__instance.miniWorld.active = !__instance.miniWorld.active;
+					if (AvatarInputHandler.main.IsEnabled() && GameInput.GetButtonDown(GameInput.Button.AltTool))
+					{
+						__instance.miniWorld.active = !__instance.miniWorld.active;
+					}
+				}
+				else if(SN1MC.UsingOculus)
+                {
+					if (GameInput.GetButtonHeld(GameInput.Button.MoveUp) && GameInput.GetButtonHeld(GameInput.Button.MoveDown))
+					{
+						if (AvatarInputHandler.main.IsEnabled() && GameInput.GetButtonDown(GameInput.Button.AltTool))
+						{
+							__instance.miniWorld.active = !__instance.miniWorld.active;
+						}
+					}
 				}
 				__instance.seaglideIllumRenderer.GetPropertyBlock(__instance.seaglideIllumPropertyBlock, 1);
 				if (__instance.miniWorld.active)
@@ -72,6 +85,6 @@ namespace SN1MC.Controls.Vehicles
 				__instance.seaglideIllumRenderer.SetPropertyBlock(__instance.seaglideIllumPropertyBlock, 1);
 				return false;
 			}
-		}*
+		}
 	}
-}*/
+}

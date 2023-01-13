@@ -1,4 +1,4 @@
-﻿/*
+﻿
 using HarmonyLib;
 
 namespace SN1MC.Controls
@@ -39,13 +39,30 @@ namespace SN1MC.Controls
 						}
 						i++;
 					}
-					if (GameInput.GetButtonDown(GameInput.Button.CycleNext))
+					if (SN1MC.UsingSteamVR)
 					{
-						__instance.target.SlotNext();
+						if (GameInput.GetButtonDown(GameInput.Button.CycleNext))
+						{
+							__instance.target.SlotNext();
+						}
+						else if (GameInput.GetButtonDown(GameInput.Button.CyclePrev))
+						{
+							__instance.target.SlotPrevious();
+						}
 					}
-					else if (GameInput.GetButtonDown(GameInput.Button.CyclePrev))
-					{
-						__instance.target.SlotPrevious();
+					else
+                    {
+						if (GameInput.GetButtonHeld(GameInput.Button.MoveDown) && GameInput.GetButtonHeld(GameInput.Button.MoveUp))
+						{
+							if (GameInput.GetButtonDown(GameInput.Button.CycleNext))
+							{
+								__instance.target.SlotNext();
+							}
+							else if (GameInput.GetButtonDown(GameInput.Button.CyclePrev))
+							{
+								__instance.target.SlotPrevious();
+							}
+						}
 					}
 				}
 				if (AvatarInputHandler.main != null && AvatarInputHandler.main.IsEnabled())
@@ -83,4 +100,4 @@ namespace SN1MC.Controls
 			}
 		}
 	}
-}*/
+}

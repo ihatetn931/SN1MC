@@ -195,9 +195,19 @@ namespace SN1MC
                     //axisValues[7] = xrInput.Get(Controller.Right, CommonUsages.secondaryTouch).CompareTo(0.1f);
                     //  }
                 }
-
-
-                if (useController && !SN1MC.UsingSteamVR)
+                if(XRSettings.loadedDeviceName == "Oculus")
+                {
+                    Vector2 vector = xrInput.Get(Controller.Left, CommonUsages.primary2DAxis);
+                    GameInput.axisValues[2] = vector.x;
+                    GameInput.axisValues[3] = -vector.y;
+                    Vector2 vector2 = xrInput.Get(Controller.Right, CommonUsages.primary2DAxis);
+                    GameInput.axisValues[0] = vector2.x;
+                    GameInput.axisValues[1] = -vector2.y;
+                    // TODO: Use deadzone?
+                    GameInput.axisValues[4] = xrInput.Get(Controller.Left, CommonUsages.trigger).CompareTo(0.3f);
+                    GameInput.axisValues[5] = xrInput.Get(Controller.Right, CommonUsages.trigger).CompareTo(0.3f);
+                }
+                if (useController && XRSettings.loadedDeviceName != "Oculus" && !SN1MC.UsingSteamVR)
                 {
                     if (GameInput.GetUseOculusInputManager())
                     {
@@ -487,10 +497,21 @@ namespace SN1MC
                 {
                     return;
                 }
-                if (GameInput.GetButtonDown(GameInput.Button.UIMenu) && IngameMenu.main != null && !IngameMenu.main.selected)
+                if (SN1MC.UsingSteamVR)
                 {
-                    IngameMenu.main.Open();
-                    GameInput.ClearInput();
+                    if (GameInput.GetButtonDown(GameInput.Button.UIMenu) && IngameMenu.main != null && !IngameMenu.main.selected)
+                    {
+                        IngameMenu.main.Open();
+                        GameInput.ClearInput();
+                    }
+                }
+                else
+                {
+                    if (GameInput.GetButtonDown(GameInput.Button.UIMenu) && IngameMenu.main != null && !IngameMenu.main.selected || GameInput.GetButtonHeldTime(GameInput.Button.PDA) > 0.5f)
+                    {
+                        IngameMenu.main.Open();
+                        GameInput.ClearInput();
+                    }
                 }
             }
         }

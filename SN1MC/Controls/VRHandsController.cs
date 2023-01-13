@@ -202,6 +202,22 @@ namespace SN1MC.Controls
                 armsController.leftWorldTarget =  leftHand;
 
             }
+            if(VRCustomOptionsMenu.enableHandsWithoutTools && playerTool == null)
+            {
+                rightHand.position = rightController.transform.position;
+                rightHand.rotation = rightController.transform.rotation * new Quaternion(-0.006f, 0.005f, -0.007000001f, -0.008f);
+                ik.solver.rightHandEffector.positionWeight = 1;
+                ik.solver.rightHandEffector.rotationWeight = 1;
+                ik.solver.rightHandEffector.target = rightHand;
+                ik.solver.rightArmChain.bendConstraint.weight = 0;
+
+                leftHand.position = leftController.transform.position;
+                leftHand.rotation = leftController.transform.rotation * new Quaternion(0.006000001f, -0.011f, -0.004f, -0.013f);
+                ik.solver.leftHandEffector.positionWeight = 1;
+                ik.solver.leftHandEffector.rotationWeight = 1;
+                ik.solver.leftHandEffector.target = leftHand;
+                ik.solver.leftArmChain.bendConstraint.weight = 0;
+            }
             if (playerTool != null)
             {
                 rightHand.position = playerTool.transform.position + rightController.transform.position;

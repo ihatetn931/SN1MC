@@ -36,6 +36,8 @@ namespace SN1MC.Controls.Tools
 				bool buttonHeld = false;
 				bool buttonDown = false;
 				bool buttonHeld2 = false;
+				bool moveUpHeld = false;
+				bool moveDownHeld = false;
 				if (gameObject == null)
 				{
 					return false;
@@ -46,6 +48,8 @@ namespace SN1MC.Controls.Tools
 				buttonDown = GameInput.GetButtonDown(GameInput.Button.Deconstruct);
 				buttonHeld2 = GameInput.GetButtonHeld(GameInput.Button.Deconstruct);
 				float buttonHeldtime = GameInput.GetButtonHeldTime(GameInput.Button.Deconstruct);
+				moveUpHeld = GameInput.GetButtonHeld(GameInput.Button.MoveUp);
+				moveDownHeld = GameInput.GetButtonHeld(GameInput.Button.MoveDown);
 
 
 				Constructable constructable = gameObject.GetComponentInParent<Constructable>();
@@ -62,25 +66,51 @@ namespace SN1MC.Controls.Tools
 						return false;
 					}
 					string text;
-					if (constructable.DeconstructionAllowed(out text))
+					if (SN1MC.UsingSteamVR)
 					{
-						if (buttonHeld2)
+						if (constructable.DeconstructionAllowed(out text))
 						{
-							if (constructable.constructed)
+							if (buttonHeld2)
 							{
-								Builder.ResetLast();
-								constructable.SetState(false, false);
-								return false;
+								if (constructable.constructed)
+								{
+									Builder.ResetLast();
+									constructable.SetState(false, false);
+									return false;
+								}
 							}
-						}
-						__instance.Construct(constructable, false, buttonDown);
-						return false;
+							__instance.Construct(constructable, false, buttonDown);
+							return false;
 
+						}
+						else if (buttonDown && !string.IsNullOrEmpty(text))
+						{
+							ErrorMessage.AddMessage(text);
+							return false;
+						}
 					}
-					else if (buttonDown && !string.IsNullOrEmpty(text))
+					else
 					{
-						ErrorMessage.AddMessage(text);
-						return false;
+						if (constructable.DeconstructionAllowed(out text))
+						{
+							if (buttonHeld2 && moveDownHeld && moveUpHeld)
+							{
+								if (constructable.constructed)
+								{
+									Builder.ResetLast();
+									constructable.SetState(false, false);
+									return false;
+								}
+							}
+							__instance.Construct(constructable, false, buttonDown && moveDownHeld && moveUpHeld);
+							return false;
+
+						}
+						else if (buttonDown && !string.IsNullOrEmpty(text) && moveUpHeld && moveDownHeld)
+						{
+							ErrorMessage.AddMessage(text);
+							return false;
+						}
 					}
 				}
 				else
@@ -94,22 +124,46 @@ namespace SN1MC.Controls.Tools
 							baseDeconstructable = componentInParent.parent;
 						}
 					}
-					if (baseDeconstructable != null && num <= 11f)
+					if (SN1MC.UsingSteamVR)
 					{
-						string text;
-						if (baseDeconstructable.DeconstructionAllowed(out text))
+						if (baseDeconstructable != null && num <= 11f)
 						{
-							__instance.OnHover(baseDeconstructable);
-							if (buttonDown)
+							string text;
+							if (baseDeconstructable.DeconstructionAllowed(out text))
 							{
-								Builder.ResetLast();
-								baseDeconstructable.Deconstruct();
-								return false;
+								__instance.OnHover(baseDeconstructable);
+								if (buttonDown)
+								{
+									Builder.ResetLast();
+									baseDeconstructable.Deconstruct();
+									return false;
+								}
+							}
+							else if (buttonDown && !string.IsNullOrEmpty(text))
+							{
+								ErrorMessage.AddMessage(text);
 							}
 						}
-						else if (buttonDown && !string.IsNullOrEmpty(text))
+					}
+					else
+					{
+						if (baseDeconstructable != null && num <= 11f)
 						{
-							ErrorMessage.AddMessage(text);
+							string text;
+							if (baseDeconstructable.DeconstructionAllowed(out text))
+							{
+								__instance.OnHover(baseDeconstructable);
+								if (buttonDown && moveDownHeld && moveUpHeld)
+								{
+									Builder.ResetLast();
+									baseDeconstructable.Deconstruct();
+									return false;
+								}
+							}
+							else if (buttonDown && !string.IsNullOrEmpty(text) && moveDownHeld && moveUpHeld)
+							{
+								ErrorMessage.AddMessage(text);
+							}
 						}
 					}
 				}
@@ -138,17 +192,35 @@ namespace SN1MC.Controls.Tools
 			[HarmonyPrefix]
 			static bool Prefix(int max, ref bool __result)
 			{
-				if (GameInput.GetButtonDown(Builder.buttonRotateCW))
+				if (SN1MC.UsingSteamVR)
 				{
-					Builder.lastRotation = (Builder.lastRotation + max - 1) % max;
-					__result = true;
+					if (GameInput.GetButtonDown(Builder.buttonRotateCW))
+					{
+						Builder.lastRotation = (Builder.lastRotation + max - 1) % max;
+						__result = true;
+					}
+					if (GameInput.GetButtonDown(Builder.buttonRotateCCW))
+					{
+						Builder.lastRotation = (Builder.lastRotation + 1) % max;
+						__result = true;
+					}
 				}
-				if (GameInput.GetButtonDown(Builder.buttonRotateCCW))
+				else
 				{
-					Builder.lastRotation = (Builder.lastRotation + 1) % max;
-					__result = true;
+					if (GameInput.GetButtonHeld(GameInput.Button.MoveUp) && GameInput.GetButtonHeld(GameInput.Button.MoveDown))
+					{
+						if (GameInput.GetButtonDown(Builder.buttonRotateCW))
+						{
+							Builder.lastRotation = (Builder.lastRotation + max - 1) % max;
+							__result = true;
+						}
+						if (GameInput.GetButtonDown(Builder.buttonRotateCCW))
+						{
+							Builder.lastRotation = (Builder.lastRotation + 1) % max;
+							__result = true;
+						}
+					}
 				}
-
 				__result = false;
 				return false;
 			}
@@ -160,13 +232,30 @@ namespace SN1MC.Controls.Tools
 			[HarmonyPrefix]
 			static bool Prefix(float additiveRotation, ref float __result)
 			{
-				if (GameInput.GetButtonHeld(Builder.buttonRotateCW))
+				if (SN1MC.UsingSteamVR)
 				{
-					additiveRotation = MathExtensions.RepeatAngle(additiveRotation - Builder.GetDeltaTimeForAdditiveRotation() * Builder.additiveRotationSpeed);
+					if (GameInput.GetButtonHeld(Builder.buttonRotateCW))
+					{
+						additiveRotation = MathExtensions.RepeatAngle(additiveRotation - Builder.GetDeltaTimeForAdditiveRotation() * Builder.additiveRotationSpeed);
+					}
+					else if (GameInput.GetButtonHeld(Builder.buttonRotateCCW))
+					{
+						additiveRotation = MathExtensions.RepeatAngle(additiveRotation + Builder.GetDeltaTimeForAdditiveRotation() * Builder.additiveRotationSpeed);
+					}
 				}
-				else if (GameInput.GetButtonHeld(Builder.buttonRotateCCW))
+				else
 				{
-					additiveRotation = MathExtensions.RepeatAngle(additiveRotation + Builder.GetDeltaTimeForAdditiveRotation() * Builder.additiveRotationSpeed);
+					if (GameInput.GetButtonHeld(GameInput.Button.MoveUp) && GameInput.GetButtonHeld(GameInput.Button.MoveDown))
+					{
+						if (GameInput.GetButtonHeld(Builder.buttonRotateCW))
+						{
+							additiveRotation = MathExtensions.RepeatAngle(additiveRotation - Builder.GetDeltaTimeForAdditiveRotation() * Builder.additiveRotationSpeed);
+						}
+						else if (GameInput.GetButtonHeld(Builder.buttonRotateCCW))
+						{
+							additiveRotation = MathExtensions.RepeatAngle(additiveRotation + Builder.GetDeltaTimeForAdditiveRotation() * Builder.additiveRotationSpeed);
+						}
+					}
 				}
 
 				//return additiveRotation;
@@ -176,3 +265,4 @@ namespace SN1MC.Controls.Tools
 		}
 	}
 }
+

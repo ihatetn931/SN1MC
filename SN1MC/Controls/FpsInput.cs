@@ -214,16 +214,21 @@ namespace SN1MC.Controls
 								result = Camera.main.WorldToScreenPoint(VRHandsController.rightController.transform.position + VRHandsController.rightController.transform.forward * FPSInputModule.current.maxInteractionDistance);
 							if (__instance.lastRaycastResult.distance > 0 && __instance.lastRaycastResult.distance < FPSInputModule.current.maxInteractionDistance)
 							{
-								SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRUI.Activate();
-								SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRMain.Deactivate();
+								if (SN1MC.UsingSteamVR)
+								{
+									SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRUI.Activate();
+									SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRMain.Deactivate();
+								}
 								VRHandsController.laserPointer.LaserPointerSet(Camera.main.ScreenPointToRay(__instance.lastRaycastResult.screenPosition).GetPoint(__instance.lastRaycastResult.distance));
 								FPSInputModule.current.lastRaycastResult.Clear();
 							}
 							else if (triggerObject.distance > 1 && triggerObject.distance < FPSInputModule.current.maxInteractionDistance)
 							{
-
-								SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRUI.Deactivate();
-								SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRMain.Activate();
+								if (SN1MC.UsingSteamVR)
+								{
+									SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRUI.Deactivate();
+									SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRMain.Activate();
+								}
 
 								if (Player.main.GetPDA().isInUse && !IngameMenu.main.isActiveAndEnabled)
 									VRHandsController.laserPointer.LaserPointerSet(VRHandsController.rightController.transform.position - VRHandsController.rightController.transform.up * FPSInputModule.current.maxInteractionDistance);
@@ -232,8 +237,11 @@ namespace SN1MC.Controls
 							}
 							else
 							{
-								SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRUI.Deactivate();
-								SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRMain.Activate();
+								if (SN1MC.UsingSteamVR)
+								{
+									SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRUI.Deactivate();
+									SteamVRActions.Valve.VR.SteamVR_Actions.SubnauticaVRMain.Activate();
+								}
 								if (Player.main.GetPDA().isInUse && !IngameMenu.main.isActiveAndEnabled)
 									VRHandsController.laserPointer.LaserPointerSet(VRHandsController.rightController.transform.position - VRHandsController.rightController.transform.up * FPSInputModule.current.maxInteractionDistance);
 								else
